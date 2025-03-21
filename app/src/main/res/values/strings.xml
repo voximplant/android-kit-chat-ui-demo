@@ -1,3 +1,7 @@
+<!--
+  ~ Copyright (c) 2011 - 2025, Voximplant, Inc. All rights reserved.
+  -->
+
 <resources>
     <string name="app_name" translatable="false">Kit Chat Demo</string>
     <string name="select_region">Select region</string>

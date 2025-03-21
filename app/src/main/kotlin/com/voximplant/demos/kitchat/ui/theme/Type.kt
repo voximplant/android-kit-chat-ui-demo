@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2011 - 2025, Voximplant, Inc. All rights reserved.
+ */
+
 package com.voximplant.demos.kitchat.ui.theme
 
 import androidx.compose.material3.Typography

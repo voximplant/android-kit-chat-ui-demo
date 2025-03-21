@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2011 - 2025, Voximplant, Inc. All rights reserved.
+  -->
+
 <resources>
     <string name="select_region">Выберите регион</string>
     <string name="field_cannot_be_empty_error">Поле не может быть пустым</string>

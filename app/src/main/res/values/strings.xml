@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name" translatable="false">Kit Chat Demo</string>
+    <string name="select_region">Select region</string>
+    <string name="field_cannot_be_empty_error">The field cannot be empty</string>
+    <string name="invalid_value_error">Invalid value</string>
+    <string name="max_characters_error">%d - max. number of characters</string>
+    <string name="region">Region</string>
+    <string name="channel_uuid">Channel UUID</string>
+    <string name="token">Token</string>
+    <string name="client_id">Client ID</string>
+    <string name="enter_channel_uuid">Enter channel UUID</string>
+    <string name="enter_token">Enter token</string>
+    <string name="enter_client_id">Enter client ID</string>
+    <string name="allow_notifications">Allow notifications</string>
+    <string name="open_chat">Open chat</string>
+    <string name="settings">Settings</string>
+    <string name="permission_not_granted">Permission not granted</string>
+    <string name="allow_notification">To receive notifications, allow permission in Settings</string>
+    <string name="error_of_registration_of_the_push_token">Push token registration error</string>
+    <string name="try_again">Try again</string>
+    <string name="repeat_attempt">Attempt in progress…</string>
+</resources>

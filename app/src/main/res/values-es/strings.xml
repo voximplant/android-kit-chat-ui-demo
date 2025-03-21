@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="select_region">Seleccionar región</string>
+    <string name="field_cannot_be_empty_error">El campo no puede estar vacío</string>
+    <string name="invalid_value_error">Valor no válido</string>
+    <string name="max_characters_error">%d - número máximo de caracteres</string>
+    <string name="region">Región</string>
+    <string name="channel_uuid">UUID del canal</string>
+    <string name="token">Token</string>
+    <string name="client_id">ID del cliente</string>
+    <string name="enter_channel_uuid">Introduzca UUID del canal</string>
+    <string name="enter_token">Introduzca token</string>
+    <string name="enter_client_id">Introduzca ID del cliente</string>
+    <string name="allow_notifications">Permitir notificaciones</string>
+    <string name="open_chat">Abrir chat</string>
+    <string name="settings">Configuración</string>
+    <string name="permission_not_granted">Permiso no concedido</string>
+    <string name="allow_notification">Para recibir notificaciones, permita permiso en Configuración</string>
+    <string name="error_of_registration_of_the_push_token">Error de registro de token push</string>
+    <string name="try_again">Inténtelo de nuevo</string>
+    <string name="repeat_attempt">Intento en curso…</string>
+</resources>

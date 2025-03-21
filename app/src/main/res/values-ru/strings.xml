@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="select_region">Выберите регион</string>
+    <string name="field_cannot_be_empty_error">Поле не может быть пустым</string>
+    <string name="invalid_value_error">Недопустимое значение</string>
+    <string name="max_characters_error">%d — макс. кол-во символов</string>
+    <string name="region">Регион</string>
+    <string name="channel_uuid">UUID канала</string>
+    <string name="token">Токен</string>
+    <string name="client_id">ID клиента</string>
+    <string name="enter_channel_uuid">Введите UUID канала</string>
+    <string name="enter_token">Введите токен</string>
+    <string name="enter_client_id">Введите ID клиента</string>
+    <string name="allow_notifications">Разрешить уведомления</string>
+    <string name="open_chat">Открыть чат</string>
+    <string name="settings">Настройки</string>
+    <string name="permission_not_granted">Разрешение не выдано</string>
+    <string name="allow_notification">Разрешите доступ к уведомлениям в настройках</string>
+    <string name="error_of_registration_of_the_push_token">Ошибка регистрации push-токена</string>
+    <string name="try_again">Повторить попытку</string>
+    <string name="repeat_attempt">Повторение попытки…</string>
+</resources>

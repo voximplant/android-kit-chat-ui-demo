@@ -46,8 +46,8 @@ android {
 }
 
 dependencies {
+    implementation(libs.voximplant.kit.chat.ui)
     implementation(libs.accompanist.permissions)
-    implementation(libs.android.kit.chat.ui)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.core.splashscreen)

@@ -4,7 +4,6 @@ activityCompose = "1.10.0"
 agp = "8.8.1"
 androidxCoreSplashscreen = "1.0.1"
 androidxHiltNavigationCompose = "1.2.0"
-androidKitChatUi = "1.0.0"
 coreKtx = "1.15.0"
 composeBom = "2024.04.01"
 datastorePreferences = "1.1.2"
@@ -15,10 +14,10 @@ kotlin = "2.1.10"
 ksp = "2.1.10-1.0.29"
 lifecycleRuntimeKtx = "2.8.7"
 espressoCore = "3.6.1"
+voximplantKitChatUi = "1.0.0"
 
 [libraries]
 accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanistPermissions" }
-android-kit-chat-ui = { module = "com.voximplant:android-kit-chat-ui", version.ref = "androidKitChatUi" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "androidxCoreSplashscreen" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -37,6 +36,7 @@ firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics
 firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging-ktx" }
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
+voximplant-kit-chat-ui = { module = "com.voximplant:android-kit-chat-ui", version.ref = "voximplantKitChatUi" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

@@ -7,7 +7,6 @@
     <string name="select_region">Seleccionar región</string>
     <string name="field_cannot_be_empty_error">El campo no puede estar vacío</string>
     <string name="invalid_value_error">Valor no válido</string>
-    <string name="max_characters_error">%d - número máximo de caracteres</string>
     <string name="region">Región</string>
     <string name="channel_uuid">UUID del canal</string>
     <string name="token">Token</string>

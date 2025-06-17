@@ -7,6 +7,7 @@ package com.voximplant.demos.kitchat.ui
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.voximplant.android.kit.chat.core.model.Region
 import com.voximplant.demos.kitchat.datastore.CredentialsManager
 import com.voximplant.demos.kitchat.datastore.model.Credentials
 import com.voximplant.demos.kitchat.push.FirebasePushTokenProvider
@@ -57,9 +58,7 @@ class HomeScreenViewModel @Inject constructor(
     fun setClientID(clientID: String) {
         viewModelScope.launch {
             _credentials.value = _credentials.value.copy(clientID = clientID.trimSpaces())
-            credentialsManager.saveClientID(clientID
-                .trimSpaces()
-            )
+            credentialsManager.saveClientID(clientID.trimSpaces())
         }
     }
 
@@ -75,4 +74,6 @@ class HomeScreenViewModel @Inject constructor(
     private fun String.trimSpaces(): String {
         return this.replace(" ", "").replace(Regex("[\n\r]"), "")
     }
+
+    fun mapRegion(region: String): Region? = credentialsManager.mapRegion(region)
 }

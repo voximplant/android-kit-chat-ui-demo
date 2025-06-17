@@ -29,13 +29,16 @@ class FirebasePushService : FirebaseMessagingService() {
     override fun onMessageReceived(message: RemoteMessage) {
         coroutineScope.launch {
             val credentials = credentialsManager.credentials.firstOrNull() ?: return@launch
-            KitChatUi(
-                context = applicationContext,
-                accountRegion = credentials.region,
-                channelUuid = credentials.channelUUID,
-                token = credentials.token,
-                clientId = credentials.clientID,
-            ).handlePush(message.data)
+            val region = credentialsManager.mapRegion(credentials.region)
+            if (region != null) {
+                KitChatUi(
+                    context = applicationContext,
+                    accountRegion = region,
+                    channelUuid = credentials.channelUUID,
+                    token = credentials.token,
+                    clientId = credentials.clientID,
+                ).handlePush(message.data)
+            }
         }
     }
 

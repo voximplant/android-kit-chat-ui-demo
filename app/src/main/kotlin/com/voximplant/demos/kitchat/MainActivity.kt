@@ -68,13 +68,16 @@ class MainActivity : ComponentActivity() {
                     if (KitChatUi.checkIntent(intent)) {
                         val credentials = viewModel.credentials.firstOrNull() ?: return@collect
 
-                        KitChatUi(
-                            context = applicationContext,
-                            accountRegion = credentials.region,
-                            channelUuid = credentials.channelUUID,
-                            token = credentials.token,
-                            clientId = credentials.clientID,
-                        ).startActivity()
+                        val region = viewModel.mapRegion(credentials.region)
+                        if (region != null) {
+                            KitChatUi(
+                                context = applicationContext,
+                                accountRegion = region,
+                                channelUuid = credentials.channelUUID,
+                                token = credentials.token,
+                                clientId = credentials.clientID,
+                            ).startActivity()
+                        }
                     }
                 }
             }

@@ -62,6 +62,8 @@ class HomeScreenViewModel @Inject constructor(
         }
     }
 
+    fun getRegion(region: String): Region? = credentialsManager.getRegion(region)
+
     suspend fun getPushToken(): String? {
         return try {
             pushTokenProvider.getToken()
@@ -74,6 +76,4 @@ class HomeScreenViewModel @Inject constructor(
     private fun String.trimSpaces(): String {
         return this.replace(" ", "").replace(Regex("[\n\r]"), "")
     }
-
-    fun mapRegion(region: String): Region? = credentialsManager.mapRegion(region)
 }

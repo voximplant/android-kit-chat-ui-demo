@@ -94,6 +94,8 @@ import com.voximplant.demos.kitchat.ui.theme.Purple90
 import com.voximplant.demos.kitchat.ui.theme.Red50
 import com.voximplant.demos.kitchat.ui.theme.Red95
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.drop
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 @Composable
@@ -166,7 +168,7 @@ fun HomeRoute(
                 showRepeatRegistrationBanner = false
                 return@launch
             }
-            val region = viewModel.mapRegion(credentials.region)
+            val region = viewModel.getRegion(credentials.region)
             if (region != null) {
                 KitChatUi(
                     context = context,
@@ -185,6 +187,8 @@ fun HomeRoute(
                         showRegistrationErrorBanner = true
                         showRepeatRegistrationBanner = false
                     }
+            } else {
+                regionError = context.getString(R.string.field_cannot_be_empty_error)
             }
         }
     }
@@ -229,9 +233,10 @@ fun HomeRoute(
         )
     }
 
-    LaunchedEffect(credentials.region.isEmpty() && credentials.channelUUID.isEmpty() && credentials.token.isEmpty() && credentials.clientID.isEmpty()) {
+    LaunchedEffect(Unit) {
         if (notificationsPermissionGranted) {
-            if (credentials.region.isEmpty() || credentials.channelUUID.isEmpty() || credentials.token.isEmpty() || credentials.clientID.isEmpty()) return@LaunchedEffect
+            val dropInitCredentials = viewModel.credentials.drop(1).first()
+            if (dropInitCredentials.region.isEmpty() || dropInitCredentials.channelUUID.isEmpty() || dropInitCredentials.token.isEmpty() || dropInitCredentials.clientID.isEmpty()) return@LaunchedEffect
             registerPushToken()
         }
     }
@@ -263,7 +268,7 @@ fun HomeRoute(
                 if (notificationsPermissionGranted) {
                     registerPushToken()
                 }
-                val region = viewModel.mapRegion(credentials.region)
+                val region = viewModel.getRegion(credentials.region)
                 if (region != null) {
                     KitChatUi(
                         context = context,
@@ -274,6 +279,8 @@ fun HomeRoute(
                     ).apply {
                         onAuthorizationError = ::checkAuthorizationState
                     }.startActivity()
+                } else {
+                    regionError = context.getString(R.string.field_cannot_be_empty_error)
                 }
             }
         },

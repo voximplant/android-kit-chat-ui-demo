@@ -68,7 +68,7 @@ class MainActivity : ComponentActivity() {
                     if (KitChatUi.checkIntent(intent)) {
                         val credentials = viewModel.credentials.firstOrNull() ?: return@collect
 
-                        val region = viewModel.mapRegion(credentials.region)
+                        val region = viewModel.getRegion(credentials.region)
                         if (region != null) {
                             KitChatUi(
                                 context = applicationContext,

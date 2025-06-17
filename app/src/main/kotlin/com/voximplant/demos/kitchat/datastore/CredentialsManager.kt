@@ -52,7 +52,7 @@ class CredentialsManager @Inject constructor(
         }
     }
 
-    fun mapRegion(region: String): Region? {
+    fun getRegion(region: String): Region? {
         return when(region) {
             "br" -> Region.BR
             "eu" -> Region.EU

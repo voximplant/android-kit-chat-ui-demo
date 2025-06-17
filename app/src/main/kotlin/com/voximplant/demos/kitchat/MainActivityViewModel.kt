@@ -29,7 +29,7 @@ class MainActivityViewModel @Inject constructor(
         _uiState.value = MainActivityUiState.Success
     }
 
-    fun mapRegion(region: String): Region? = credentialsManager.mapRegion(region)
+    fun getRegion(region: String): Region? = credentialsManager.getRegion(region)
 }
 
 sealed interface MainActivityUiState {

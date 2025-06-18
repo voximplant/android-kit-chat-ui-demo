@@ -79,10 +79,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.voximplant.android.kit.chat.ui.KitChatUi
 import com.voximplant.android.kit.chat.ui.core.model.AuthorizationError
 import com.voximplant.demos.kitchat.R
+import com.voximplant.demos.kitchat.datastore.model.Credentials
 import com.voximplant.demos.kitchat.ui.theme.Gray05
 import com.voximplant.demos.kitchat.ui.theme.Gray10
 import com.voximplant.demos.kitchat.ui.theme.Gray100
@@ -94,8 +94,6 @@ import com.voximplant.demos.kitchat.ui.theme.Purple90
 import com.voximplant.demos.kitchat.ui.theme.Red50
 import com.voximplant.demos.kitchat.ui.theme.Red95
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.drop
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 @Composable
@@ -107,10 +105,10 @@ fun HomeRoute(
     val focusManager = LocalFocusManager.current
     val scope = rememberCoroutineScope()
     var job by remember { mutableStateOf<Job?>(null) }
-    val credentials by viewModel.credentials.collectAsStateWithLifecycle()
 
     var expanded by rememberSaveable { mutableStateOf(false) }
     val listValues = listOf("ru", "ru2", "eu", "us", "br", "kz")
+    var credentials: Credentials by remember { mutableStateOf(Credentials("", "", "", "")) }
 
     var regionError: String? by rememberSaveable { mutableStateOf(null) }
     var channelUuidError: String? by rememberSaveable { mutableStateOf(null) }
@@ -123,7 +121,7 @@ fun HomeRoute(
     var showRegistrationErrorBanner by rememberSaveable { mutableStateOf(false) }
     var showRepeatRegistrationBanner by rememberSaveable { mutableStateOf(false) }
 
-    fun checkCredentials(): Boolean {
+    fun checkCredentials(credentials: Credentials): Boolean {
         if (credentials.region.isEmpty()) {
             regionError = context.getString(R.string.field_cannot_be_empty_error)
         }
@@ -159,7 +157,17 @@ fun HomeRoute(
         }
     }
 
-    fun registerPushToken() {
+    fun registerPushToken(credentials: Credentials) {
+        if (notificationsPermissionGranted.not()) {
+            showRegistrationErrorBanner = true
+            showRepeatRegistrationBanner = false
+            return
+        }
+        if (credentials.region.isEmpty() || credentials.channelUUID.isEmpty() || credentials.token.isEmpty() || credentials.clientID.isEmpty()) {
+            showRegistrationErrorBanner = true
+            showRepeatRegistrationBanner = false
+            return
+        }
         job?.cancel()
         job = scope.launch {
             val pushToken = viewModel.getPushToken()
@@ -234,10 +242,16 @@ fun HomeRoute(
     }
 
     LaunchedEffect(Unit) {
-        if (notificationsPermissionGranted) {
-            val dropInitCredentials = viewModel.credentials.drop(1).first()
-            if (dropInitCredentials.region.isEmpty() || dropInitCredentials.channelUUID.isEmpty() || dropInitCredentials.token.isEmpty() || dropInitCredentials.clientID.isEmpty()) return@LaunchedEffect
-            registerPushToken()
+        var shouldRegisterPushToken = true
+        viewModel.uiState.collect { state ->
+            if (state is HomeScreenViewModel.UiState.Success) {
+                credentials = state.credentials
+
+                if (shouldRegisterPushToken) {
+                    registerPushToken(state.credentials)
+                    shouldRegisterPushToken = false
+                }
+            }
         }
     }
 
@@ -258,16 +272,14 @@ fun HomeRoute(
         onBannerClick = {
             showRegistrationErrorBanner = false
             showRepeatRegistrationBanner = true
-            registerPushToken()
+            registerPushToken(credentials)
         },
         onRequestPermissionClick = {
             notificationsPermissionRequest = true
         },
         onOpenChatClick = {
-            if (checkCredentials()) {
-                if (notificationsPermissionGranted) {
-                    registerPushToken()
-                }
+            if (checkCredentials(credentials)) {
+                registerPushToken(credentials)
                 val region = viewModel.getRegion(credentials.region)
                 if (region != null) {
                     KitChatUi(

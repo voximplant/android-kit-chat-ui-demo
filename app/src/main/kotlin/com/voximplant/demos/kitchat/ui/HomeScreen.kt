@@ -79,9 +79,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.voximplant.android.kit.chat.ui.KitChatUi
+import com.voximplant.android.kit.chat.ui.core.model.AuthorizationError
 import com.voximplant.demos.kitchat.R
+import com.voximplant.demos.kitchat.datastore.model.Credentials
 import com.voximplant.demos.kitchat.ui.theme.Gray05
 import com.voximplant.demos.kitchat.ui.theme.Gray10
 import com.voximplant.demos.kitchat.ui.theme.Gray100
@@ -104,10 +105,10 @@ fun HomeRoute(
     val focusManager = LocalFocusManager.current
     val scope = rememberCoroutineScope()
     var job by remember { mutableStateOf<Job?>(null) }
-    val credentials by viewModel.credentials.collectAsStateWithLifecycle()
 
     var expanded by rememberSaveable { mutableStateOf(false) }
     val listValues = listOf("ru", "ru2", "eu", "us", "br", "kz")
+    var credentials: Credentials by remember { mutableStateOf(Credentials("", "", "", "")) }
 
     var regionError: String? by rememberSaveable { mutableStateOf(null) }
     var channelUuidError: String? by rememberSaveable { mutableStateOf(null) }
@@ -120,46 +121,53 @@ fun HomeRoute(
     var showRegistrationErrorBanner by rememberSaveable { mutableStateOf(false) }
     var showRepeatRegistrationBanner by rememberSaveable { mutableStateOf(false) }
 
-    fun isValidInput(text: String): Boolean {
-        return Regex("^[-a-zA-Z0-9$._+!*'(),:@&=]+$").matches(text)
-    }
-
-    fun checkCredentials(): Boolean {
+    fun checkCredentials(credentials: Credentials): Boolean {
         if (credentials.region.isEmpty()) {
             regionError = context.getString(R.string.field_cannot_be_empty_error)
         }
 
-        val maxChannelUuidLength = 40
         if (credentials.channelUUID.isEmpty()) {
             channelUuidError = context.getString(R.string.field_cannot_be_empty_error)
-        } else if (!isValidInput(credentials.channelUUID)) {
-            channelUuidError = context.getString(R.string.invalid_value_error)
-        } else if (credentials.channelUUID.length > maxChannelUuidLength) {
-            channelUuidError = context.getString(R.string.max_characters_error, maxChannelUuidLength)
         }
 
-        val maxTokenLength = 40
         if (credentials.token.isEmpty()) {
             tokenError = context.getString(R.string.field_cannot_be_empty_error)
-        } else if (!isValidInput(credentials.token)) {
-            tokenError = context.getString(R.string.invalid_value_error)
-        } else if (credentials.token.length > maxTokenLength) {
-            tokenError = context.getString(R.string.max_characters_error, maxTokenLength)
         }
 
-        val maxClientIDLength = 100
         if (credentials.clientID.isEmpty()) {
             clientIDError = context.getString(R.string.field_cannot_be_empty_error)
-        } else if (!isValidInput(credentials.clientID)) {
-            clientIDError = context.getString(R.string.invalid_value_error)
-        } else if (credentials.clientID.length > maxClientIDLength) {
-            clientIDError = context.getString(R.string.max_characters_error, maxClientIDLength)
         }
 
         return regionError == null && channelUuidError == null && tokenError == null && clientIDError == null
     }
 
-    fun registerPushToken() {
+    fun checkAuthorizationState(error: AuthorizationError) {
+        when (error) {
+            is AuthorizationError.InvalidChannelUuid -> {
+                channelUuidError = context.getString(R.string.invalid_value_error)
+            }
+
+            is AuthorizationError.InvalidToken -> {
+                tokenError = context.getString(R.string.invalid_value_error)
+            }
+
+            is AuthorizationError.InvalidClientId -> {
+                clientIDError = context.getString(R.string.invalid_value_error)
+            }
+        }
+    }
+
+    fun registerPushToken(credentials: Credentials) {
+        if (notificationsPermissionGranted.not()) {
+            showRegistrationErrorBanner = true
+            showRepeatRegistrationBanner = false
+            return
+        }
+        if (credentials.region.isEmpty() || credentials.channelUUID.isEmpty() || credentials.token.isEmpty() || credentials.clientID.isEmpty()) {
+            showRegistrationErrorBanner = true
+            showRepeatRegistrationBanner = false
+            return
+        }
         job?.cancel()
         job = scope.launch {
             val pushToken = viewModel.getPushToken()
@@ -168,22 +176,28 @@ fun HomeRoute(
                 showRepeatRegistrationBanner = false
                 return@launch
             }
-
-            KitChatUi(
-                context = context,
-                accountRegion = credentials.region,
-                channelUuid = credentials.channelUUID,
-                token = credentials.token,
-                clientId = credentials.clientID,
-            ).registerPushToken(pushToken)
-                .onSuccess {
-                    showRegistrationErrorBanner = false
-                    showRepeatRegistrationBanner = false
-                }
-                .onFailure {
-                    showRegistrationErrorBanner = true
-                    showRepeatRegistrationBanner = false
-                }
+            val region = viewModel.getRegion(credentials.region)
+            if (region != null) {
+                KitChatUi(
+                    context = context,
+                    accountRegion = region,
+                    channelUuid = credentials.channelUUID,
+                    token = credentials.token,
+                    clientId = credentials.clientID,
+                ).apply {
+                    onAuthorizationError = ::checkAuthorizationState
+                }.registerPushToken(pushToken)
+                    .onSuccess {
+                        showRegistrationErrorBanner = false
+                        showRepeatRegistrationBanner = false
+                    }
+                    .onFailure {
+                        showRegistrationErrorBanner = true
+                        showRepeatRegistrationBanner = false
+                    }
+            } else {
+                regionError = context.getString(R.string.field_cannot_be_empty_error)
+            }
         }
     }
 
@@ -228,9 +242,16 @@ fun HomeRoute(
     }
 
     LaunchedEffect(Unit) {
-        if (notificationsPermissionGranted) {
-            if (credentials.region.isEmpty() || credentials.channelUUID.isEmpty() || credentials.token.isEmpty() ||credentials.clientID.isEmpty()) return@LaunchedEffect
-            registerPushToken()
+        var shouldRegisterPushToken = true
+        viewModel.uiState.collect { state ->
+            if (state is HomeScreenViewModel.UiState.Success) {
+                credentials = state.credentials
+
+                if (shouldRegisterPushToken) {
+                    registerPushToken(state.credentials)
+                    shouldRegisterPushToken = false
+                }
+            }
         }
     }
 
@@ -251,23 +272,28 @@ fun HomeRoute(
         onBannerClick = {
             showRegistrationErrorBanner = false
             showRepeatRegistrationBanner = true
-            registerPushToken()
+            registerPushToken(credentials)
         },
         onRequestPermissionClick = {
             notificationsPermissionRequest = true
         },
         onOpenChatClick = {
-            if (checkCredentials()) {
-                if (notificationsPermissionGranted) {
-                    registerPushToken()
+            if (checkCredentials(credentials)) {
+                registerPushToken(credentials)
+                val region = viewModel.getRegion(credentials.region)
+                if (region != null) {
+                    KitChatUi(
+                        context = context,
+                        accountRegion = region,
+                        channelUuid = credentials.channelUUID,
+                        token = credentials.token,
+                        clientId = credentials.clientID,
+                    ).apply {
+                        onAuthorizationError = ::checkAuthorizationState
+                    }.startActivity()
+                } else {
+                    regionError = context.getString(R.string.field_cannot_be_empty_error)
                 }
-                KitChatUi(
-                    context = context,
-                    accountRegion = credentials.region,
-                    channelUuid = credentials.channelUUID,
-                    token = credentials.token,
-                    clientId = credentials.clientID,
-                ).startActivity()
             }
         },
         onItemClick = { item ->
@@ -731,8 +757,13 @@ private fun RegistrationErrorBanner(
         onClick = onBannerClick,
         content = {
             Column(
-                modifier = Modifier.padding(start = 12.dp, top = 12.dp, end = 12.dp, bottom = 16.dp),
-            ){
+                modifier = Modifier.padding(
+                    start = 12.dp,
+                    top = 12.dp,
+                    end = 12.dp,
+                    bottom = 16.dp
+                ),
+            ) {
                 Row(verticalAlignment = Alignment.Top) {
                     Icon(
                         modifier = Modifier.size(32.dp),

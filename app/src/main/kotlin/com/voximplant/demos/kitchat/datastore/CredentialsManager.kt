@@ -8,6 +8,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
+import com.voximplant.android.kit.chat.core.model.Region
 import com.voximplant.demos.kitchat.datastore.model.Credentials
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -48,6 +49,18 @@ class CredentialsManager @Inject constructor(
     suspend fun saveClientID(clientID: String) {
         dataStore.edit { prefs ->
             prefs[KEY_CLIENT_TD] = clientID
+        }
+    }
+
+    fun getRegion(region: String): Region? {
+        return when(region) {
+            "br" -> Region.BR
+            "eu" -> Region.EU
+            "kz" -> Region.KZ
+            "ru" -> Region.RU
+            "ru2" -> Region.RU_2
+            "us" -> Region.US
+            else -> null
         }
     }
 

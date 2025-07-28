@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.hilt)
     alias(libs.plugins.ksp)
     alias(libs.plugins.gms)
+    alias(libs.plugins.firebase.crashlytics)
 }
 
 android {
@@ -16,7 +17,8 @@ android {
         minSdk = 21
         targetSdk = 35
         versionCode = 1
-        versionName = "1.1.0"
+        versionName = "1.1.1"
+
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -61,6 +63,7 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.firebase.messaging)
     implementation(libs.firebase.analytics)
+    implementation(libs.firebase.crashlytics)
     implementation(libs.hilt.android)
     implementation(platform(libs.androidx.compose.bom))
     implementation(platform(libs.firebase.bom))

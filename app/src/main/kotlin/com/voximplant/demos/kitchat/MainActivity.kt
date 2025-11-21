@@ -18,6 +18,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.voximplant.android.kit.chat.ui.KitChatUi
+import com.voximplant.android.kit.chat.ui.model.Region
 import com.voximplant.demos.kitchat.ui.HomeRoute
 import com.voximplant.demos.kitchat.ui.theme.KitChatDemoTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -68,7 +69,7 @@ class MainActivity : ComponentActivity() {
                     if (KitChatUi.checkIntent(intent)) {
                         val credentials = viewModel.credentials.firstOrNull() ?: return@collect
 
-                        val region = viewModel.getRegion(credentials.region)
+                        val region: Region? = viewModel.getRegion(credentials.region)
                         if (region != null) {
                             KitChatUi(
                                 context = applicationContext,

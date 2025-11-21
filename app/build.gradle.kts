@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2011 - 2025, Voximplant, Inc. All rights reserved.
+ */
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -17,7 +21,7 @@ android {
         minSdk = 21
         targetSdk = 35
         versionCode = 1
-        versionName = "1.1.1"
+        versionName = "1.2.0"
 
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

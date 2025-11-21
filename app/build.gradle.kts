@@ -49,7 +49,7 @@ android {
 
 dependencies {
     implementation(libs.voximplant.kit.chat.ui)
-    implementation(libs.voximplant.kit.chat.core)
+
     implementation(libs.accompanist.permissions)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.core.ktx)

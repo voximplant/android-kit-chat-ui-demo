@@ -7,7 +7,7 @@ package com.voximplant.demos.kitchat.ui
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.voximplant.android.kit.chat.core.model.Region
+import com.voximplant.android.kit.chat.ui.model.Region
 import com.voximplant.demos.kitchat.datastore.CredentialsManager
 import com.voximplant.demos.kitchat.datastore.model.Credentials
 import com.voximplant.demos.kitchat.push.FirebasePushTokenProvider

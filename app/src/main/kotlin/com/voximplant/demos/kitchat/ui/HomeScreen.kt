@@ -80,7 +80,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.voximplant.android.kit.chat.ui.KitChatUi
-import com.voximplant.android.kit.chat.ui.core.model.AuthorizationError
+import com.voximplant.android.kit.chat.ui.model.AuthorizationError
 import com.voximplant.demos.kitchat.R
 import com.voximplant.demos.kitchat.datastore.model.Credentials
 import com.voximplant.demos.kitchat.ui.theme.Gray05

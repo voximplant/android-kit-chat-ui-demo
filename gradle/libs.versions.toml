@@ -15,8 +15,7 @@ kotlin = "2.1.10"
 ksp = "2.1.10-1.0.29"
 lifecycleRuntimeKtx = "2.8.7"
 espressoCore = "3.6.1"
-voximplantKitChatUi = "1.2.0"
-voximplantKitChatCore = "1.2.0"
+voximplantKitChatUi = "1.3.0"
 
 [libraries]
 accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanistPermissions" }
@@ -40,7 +39,6 @@ firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
 voximplant-kit-chat-ui = { module = "com.voximplant:android-kit-chat-ui", version.ref = "voximplantKitChatUi" }
-voximplant-kit-chat-core = { module = "com.voximplant:android-kit-chat-core", version.ref = "voximplantKitChatCore" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

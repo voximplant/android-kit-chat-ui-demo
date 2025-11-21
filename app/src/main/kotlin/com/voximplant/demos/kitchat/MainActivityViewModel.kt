@@ -5,7 +5,7 @@
 package com.voximplant.demos.kitchat
 
 import androidx.lifecycle.ViewModel
-import com.voximplant.android.kit.chat.core.model.Region
+import com.voximplant.android.kit.chat.ui.model.Region
 import com.voximplant.demos.kitchat.datastore.CredentialsManager
 import com.voximplant.demos.kitchat.datastore.model.Credentials
 import dagger.hilt.android.lifecycle.HiltViewModel

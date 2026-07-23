@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 - 2025, Voximplant, Inc. All rights reserved.
+ * Copyright (c) 2011 - 2026, Voximplant, Inc. All rights reserved.
  */
 
 package com.voximplant.demos.kitchat.datastore
@@ -60,6 +60,7 @@ class CredentialsManager @Inject constructor(
             "ru" -> Region.RU
             "ru2" -> Region.RU_2
             "us" -> Region.US
+            "mx" -> Region.MX
             else -> null
         }
     }

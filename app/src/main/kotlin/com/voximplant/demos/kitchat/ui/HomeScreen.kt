@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 - 2025, Voximplant, Inc. All rights reserved.
+ * Copyright (c) 2011 - 2026, Voximplant, Inc. All rights reserved.
  */
 
 package com.voximplant.demos.kitchat.ui
@@ -107,7 +107,7 @@ fun HomeRoute(
     var job by remember { mutableStateOf<Job?>(null) }
 
     var expanded by rememberSaveable { mutableStateOf(false) }
-    val listValues = listOf("ru", "ru2", "eu", "us", "br", "kz")
+    val listValues = listOf("ru", "ru2", "eu", "us", "br", "kz", "mx")
     var credentials: Credentials by remember { mutableStateOf(Credentials("", "", "", "")) }
 
     var regionError: String? by rememberSaveable { mutableStateOf(null) }
@@ -852,7 +852,7 @@ fun HomeScreenPreview() {
             token = "",
             clientID = "dffa083 aaef3895dde4c631920b54b53dffa083aaef3895dde4c631920b54b53dffa083aaef3895dde4c631920b54b53dffa083aaef3",
             expanded = false,
-            listValues = listOf("ru", "ru2", "eu", "us", "br", "kz"),
+            listValues = listOf("ru", "ru2", "eu", "us", "br", "kz", "mx"),
             regionError = null,
             channelUuidError = null,
             tokenError = "Токен не может быть пустым",
@@ -887,7 +887,7 @@ private fun MenuFieldPreview() {
     KitChatDemoTheme {
         MenuField(
             expanded = false,
-            listValues = listOf("ru", "ru2", "eu", "us", "br", "kz"),
+            listValues = listOf("ru", "ru2", "eu", "us", "br", "kz", "mx"),
             selectedOptions = "ru",
             fieldName = stringResource(R.string.region),
             errorText = null,

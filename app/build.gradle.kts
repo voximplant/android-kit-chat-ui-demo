@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 - 2025, Voximplant, Inc. All rights reserved.
+ * Copyright (c) 2011 - 2026, Voximplant, Inc. All rights reserved.
  */
 
 plugins {
@@ -21,7 +21,7 @@ android {
         minSdk = 21
         targetSdk = 35
         versionCode = 1
-        versionName = "1.2.2"
+        versionName = "1.3.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

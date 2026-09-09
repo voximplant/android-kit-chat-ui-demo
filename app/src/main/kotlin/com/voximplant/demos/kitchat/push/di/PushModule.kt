@@ -4,9 +4,9 @@
 
 package com.voximplant.demos.kitchat.push.di
 
-import com.google.firebase.ktx.Firebase
+import com.google.firebase.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
-import com.google.firebase.messaging.ktx.messaging
+import com.google.firebase.messaging.messaging
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

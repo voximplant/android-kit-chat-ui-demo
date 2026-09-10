@@ -1,20 +1,20 @@
 [versions]
-accompanistPermissions = "0.37.0"
-activityCompose = "1.10.0"
-agp = "8.8.1"
-androidxCoreSplashscreen = "1.0.1"
-androidxHiltNavigationCompose = "1.2.0"
-coreKtx = "1.15.0"
-composeBom = "2024.04.01"
-datastorePreferences = "1.1.2"
-firebaseBom = "33.9.0"
-firebaseCrashlyticsPlugin = "3.0.2"
-gmsPlugin = "4.4.2"
-hilt = "2.55"
-kotlin = "2.1.10"
-ksp = "2.1.10-1.0.29"
-lifecycleRuntimeKtx = "2.8.7"
-espressoCore = "3.6.1"
+accompanistPermissions = "0.37.3"
+activityCompose = "1.13.0"
+agp = "9.3.2"
+androidxCoreSplashscreen = "1.2.0"
+androidxHiltNavigationCompose = "1.4.0"
+coreKtx = "1.19.0"
+composeBom = "2026.08.00"
+datastorePreferences = "1.2.1"
+firebaseBom = "34.18.0"
+firebaseCrashlyticsPlugin = "3.0.8"
+gmsPlugin = "4.5.0"
+hilt = "2.60.1"
+kotlin = "2.4.20"
+ksp = "2.3.10"
+lifecycleRuntimeKtx = "2.11.0"
+espressoCore = "3.7.0"
 voximplantKitChatUi = "1.5.0"
 
 [libraries]
@@ -33,9 +33,9 @@ androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
-firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics-ktx" }
-firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics-ktx" }
-firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging-ktx" }
+firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics" }
+firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics" }
+firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging" }
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
 voximplant-kit-chat-ui = { module = "com.voximplant:android-kit-chat-ui", version.ref = "voximplantKitChatUi" }
